@@ -17,15 +17,19 @@ async function getWorks() {
   return works;
 }
 
+//alert("test");
+
+//tableau works > obj.json
+//set categories > obj.json
+//array.filter() after onclick
+
 getWorks()
   .then((works) => {
     works.forEach((work) => {
-      document.querySelector(".gallery").innerHTML += `<div class="gallery">
-                                                            <figure>
+      document.querySelector(".gallery").innerHTML += `<figure>
                                                               <img src="${work.imageUrl}" alt="${work.title}" />
                                                               <figcaption>${work.title}</figcaption>
-                                                            </figure>
-                                                          </div>`;
+                                                            </figure>`;
       console.log(work);
     });
   })
