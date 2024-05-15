@@ -48,8 +48,6 @@ form.addEventListener("submit", (event) => {
 
 /*
 TO DO
-FETCH : envoyer email + password et écouter réponse (promise)
-.then (stocker le token, renvoyer sur l'index) || .error (alert:) ou texte en rouge
 
 email: sophie.bluel@test.tld
 
