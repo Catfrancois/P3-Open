@@ -12,6 +12,7 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
+    <!-- <base href="/projet/Frontend/" /> -->
     <script src="./js/main.js" defer></script>
     <script src="./js/modal.js" defer></script>
   </head>
@@ -53,10 +54,12 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
-        <div>
-          <img src="#" alt="#" />
-          <a href="#modal" class="js-modal">Modifier</a>
+        <div class="modif-title-container">
+          <h2 class="projets-title">Mes Projets</h2>
+          <button id="loginModifierButton" class="login-modifier">
+            <img src="./assets/icons/modif.png" alt="modif-icon" />
+            <a href="#modal" class="js-modal button-link">modifier</a>
+          </button>
         </div>
         <aside
           id="modal"
@@ -65,37 +68,54 @@
           style="display: none"
         >
           <div class="modal-wrapper">
-            <img class="closeCross" src="#" alt="closeCross" />
-            <h2>Galerie photo</h2>
-            <div></div>
-          </div>
-        </aside>
-        <a href="#modalAdd" style="display: none">Ajouter une photo</a>
-        <aside
-          id="modalAdd"
-          class="modal"
-          aria-hidden="true"
-          style="display: none"
-        >
-          <div class="modal-wrapper">
-            <div>
-              <img src="#" alt="arrowReturn" /><img src="#" alt="closeCross" />
+            <!-- Vue de base -->
+            <div id="modal-view-base" class="modal-content">
+              <div class="modal-header">
+                <button class="closeCross">
+                  <img src="./assets/icons/xmark.png" alt="fermer" />
+                </button>
+              </div>
+              <h2 class="modal-title">Galerie photo</h2>
+              <div id="work-cards-container"></div>
+              <hr class="style-hr" />
+              <button id="add-photo-button" class="modal-button">
+                Ajouter une photo
+              </button>
             </div>
-            <h2>Ajout photo</h2>
-            <div><!-- gere l'ajout de photo --></div>
-            <form id="formAddPicture">
-              <div>
-                <label for="text">Titre</label>
-                <input type="text" required />
+
+            <!-- Seconde vue -->
+            <div
+              id="modal-view-add-photo"
+              class="modal-content"
+              style="display: none"
+            >
+              <div class="modal-header">
+                <button class="returnArrow">
+                  <img src="./assets/icons/arrow_left.png" alt="arrowReturn" />
+                </button>
+                <button class="closeCross">
+                  <img src="./assets/icons/xmark.png" alt="fermer" />
+                </button>
               </div>
-              <div>
-                <label for="text">Catégorie</label>
-                <!-- faire un collapse de choix de categories -->
-              </div>
-              <button>Valider</button>
-            </form>
+              <h2>Ajout photo</h2>
+              <form id="formAddPicture">
+                <div>
+                  <label for="photo-title">Titre</label>
+                  <input type="text" id="photo-title" required />
+                </div>
+                <div>
+                  <label for="photo-category">Catégorie</label>
+                  <!-- Collapse de choix de catégories -->
+                  <select id="photo-category">
+                    <!-- Catégories dynamiques -->
+                  </select>
+                </div>
+                <button type="submit">Valider</button>
+              </form>
+            </div>
           </div>
         </aside>
+
         <div id="filters"></div>
         <!-- changed class to id only one occurence -->
         <div id="gallery"></div>

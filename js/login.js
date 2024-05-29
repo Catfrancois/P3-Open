@@ -47,7 +47,6 @@ form.addEventListener("submit", (event) => {
 });
 
 /*
-TO DO
 
 email: sophie.bluel@test.tld
 

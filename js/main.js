@@ -1,22 +1,36 @@
-const token = localStorage.getItem("token");
-if (token != null) {
+document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem("token");
   const logInLink = document.getElementById("logInLink");
-  logInLink.style.display = "none";
   const logOutLink = document.getElementById("logOutLink");
-  logOutLink.style.display = "block";
-}
+  const loginModifierButton = document.getElementById("loginModifierButton");
 
-/* 
-TODO 
-logOutLink
-add event listener
-supress local token
-redirect to index
+  if (token != null) {
+    logInLink.style.display = "none";
+    logOutLink.style.display = "block";
+    if (loginModifierButton) {
+      loginModifierButton.style.display = "block";
+    }
 
-//
+    logOutLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      localStorage.removeItem("token");
+      logInLink.style.display = "block";
+      logOutLink.style.display = "none";
+      if (loginModifierButton) {
+        loginModifierButton.style.display = "none";
+      }
+    });
+  } else {
+    logInLink.style.display = "block";
+    logOutLink.style.display = "none";
+    if (loginModifierButton) {
+      loginModifierButton.style.display = "none";
+    }
+  }
 
-formdata pour modale
-*/
+  getCategories();
+  getWorks();
+});
 
 var globalWorks = [];
 const gallery = document.getElementById("gallery");
@@ -36,7 +50,7 @@ async function getCategories() {
   categories = await response.json();
 
   //ajout bouton "tous"
-  displayFilterButton(null, "Tous");
+  displayFilterButton(null, "Tous", true);
 
   //ajout boutons categories
   categories.forEach(function (category) {
@@ -45,11 +59,18 @@ async function getCategories() {
 }
 
 //add class to use css
-function displayFilterButton(id, name) {
+function displayFilterButton(id, name, active = false) {
   const button = document.createElement("button");
   button.innerText = name;
   button.classList.add("filter-button");
+  if (active) {
+    button.classList.add("active");
+  }
   button.addEventListener("click", function (event) {
+    let buttons = document.getElementsByClassName("filter-button");
+
+    Array.from(buttons).forEach((button) => button.classList.remove("active"));
+    event.target.classList.add("active");
     filterWorks(id);
   });
   filters.appendChild(button);
@@ -65,7 +86,7 @@ function filterWorks(categoryId = null) {
   displayWorks(filteredWorks);
 }
 
-//refaire
+//method 2
 function displayWorks(worksData) {
   gallery.innerHTML = "";
   worksData.forEach((workData) => {
@@ -77,10 +98,3 @@ function displayWorks(worksData) {
               `;
   });
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  getCategories();
-  getWorks();
-});
-
-// class galery into id, pas besoin de check l'array
