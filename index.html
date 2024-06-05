@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <!-- <base href="/projet/Frontend/" /> -->
     <script src="./js/main.js" defer></script>
-    <script src="./js/modal.js" defer></script>
   </head>
   <body>
     <header>
@@ -98,19 +97,40 @@
                 </button>
               </div>
               <h2>Ajout photo</h2>
-              <form id="formAddPicture">
-                <div>
+              <form class="form-add-picture" id="formAddPicture">
+                <div class="add-photo-container">
+                  <img
+                    src="./assets/icons/picture_icon.png"
+                    alt="picture icon"
+                    id="picture-preview"
+                  />
+                  <label for="photo-upload" class="photo-upload"
+                    >+ Ajouter photo</label
+                  >
+                  <input
+                    type="file"
+                    id="photo-upload"
+                    accept="image/jpeg, image/png"
+                    style="display: none"
+                  />
+                  <p class="photo-info">jpg, png : 4mo max</p>
+                </div>
+                <div class="modal-label-input-container">
                   <label for="photo-title">Titre</label>
                   <input type="text" id="photo-title" required />
                 </div>
-                <div>
+                <div class="category-container">
                   <label for="photo-category">Catégorie</label>
-                  <!-- Collapse de choix de catégories -->
-                  <select id="photo-category">
-                    <!-- Catégories dynamiques -->
-                  </select>
+                  <div class="select-container">
+                    <select id="photo-category" required>
+                      <!-- Catégories dynamiques -->
+                    </select>
+                  </div>
                 </div>
-                <button type="submit">Valider</button>
+                <hr class="style-hr" />
+                <button class="button-add-picture" type="submit">
+                  Valider
+                </button>
               </form>
             </div>
           </div>

@@ -433,8 +433,16 @@ footer .logInFooterContainer {
 }
 
 .modal-header {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+}
+
+.modal-header .closeCross {
+  margin-left: auto;
+}
+
+.modal-header button {
+  display: block;
 }
 
 .icon-button {
@@ -465,6 +473,126 @@ footer .logInFooterContainer {
   flex-direction: column;
   align-items: center;
   gap: 30px;
+}
+
+.returnArrow {
+  border: none;
+  background-color: #ffffff;
+}
+
+.returnArrow:hover {
+  cursor: pointer;
+}
+
+.modal-content .button-add-picture {
+  display: block;
+  width: 237px;
+  height: 36px;
+  font-family: "Syne";
+  font-weight: 700;
+  background-color: #a7a7a7;
+  color: white;
+  text-align: center;
+  border-radius: 60px;
+  font-size: 0.875em;
+  padding: 0.5em 1em;
+  border: none;
+}
+
+.form-add-picture {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f1f6;
+  width: 100%;
+  height: 170px;
+  gap: 4px;
+}
+
+.add-photo-container .img {
+  margin-bottom: 8px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#picture-preview.preview {
+  width: 130px;
+  height: 170px;
+  object-fit: cover;
+}
+
+.add-photo-container .photo-upload {
+  width: 170px;
+  height: 36px;
+  border-radius: 50px;
+  border: none;
+  background-color: #cbd6dc;
+  color: #306685;
+  font-family: "Work Sans";
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-photo-container p {
+  color: #444444;
+  font-family: "Work Sans";
+  font-weight: 500;
+  font-size: 10px;
+}
+
+.modal-label-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-content label {
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 500;
+  color: #3d3d3d;
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.select-container {
+  box-shadow: 0px 4px 14px 0px #00000017;
+  border: none;
+  width: 420px;
+  height: 51px;
+  cursor: pointer;
+}
+
+.select-container select {
+  box-shadow: 0px 4px 14px 0px #00000017;
+  border: none;
+  width: 420px;
+  height: 51px;
+  cursor: pointer;
+  color: #6c6c6c;
+}
+
+.modal-content input {
+  box-shadow: 0px 4px 14px 0px #00000017;
+  border: none;
+  width: 420px;
+  height: 51px;
 }
 
 #modal-view-add-photo {
