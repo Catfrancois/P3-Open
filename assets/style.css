@@ -455,6 +455,7 @@ footer .logInFooterContainer {
 
 .modal-button {
   display: block;
+  align-self: center;
   width: 237px;
   font-family: "Syne";
   font-weight: 700;
@@ -465,6 +466,11 @@ footer .logInFooterContainer {
   font-size: 0.875em;
   padding: 0.5em 1em;
   border: 1px #1d6154 solid;
+}
+
+.modal-button:disabled {
+  background-color: #a7a7a7;
+  border-color: a7a7a7;
 }
 
 .modal-content {
@@ -482,21 +488,6 @@ footer .logInFooterContainer {
 
 .returnArrow:hover {
   cursor: pointer;
-}
-
-.modal-content .button-add-picture {
-  display: block;
-  width: 237px;
-  height: 36px;
-  font-family: "Syne";
-  font-weight: 700;
-  background-color: #a7a7a7;
-  color: white;
-  text-align: center;
-  border-radius: 60px;
-  font-size: 0.875em;
-  padding: 0.5em 1em;
-  border: none;
 }
 
 .form-add-picture {

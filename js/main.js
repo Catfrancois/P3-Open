@@ -3,12 +3,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const logInLink = document.getElementById("logInLink");
   const logOutLink = document.getElementById("logOutLink");
   const loginModifierButton = document.getElementById("loginModifierButton");
+  const filters = document.getElementById("filters");
 
   if (token != null) {
     logInLink.style.display = "none";
     logOutLink.style.display = "block";
     if (loginModifierButton) {
       loginModifierButton.style.display = "block";
+    }
+    if (filters) {
+      filters.style.display = "none";
     }
 
     logOutLink.addEventListener("click", (event) => {
@@ -19,12 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
       if (loginModifierButton) {
         loginModifierButton.style.display = "none";
       }
+      if (filters) {
+        filters.style.display = "flex";
+      }
     });
   } else {
     logInLink.style.display = "block";
     logOutLink.style.display = "none";
     if (loginModifierButton) {
       loginModifierButton.style.display = "none";
+    }
+    if (filters) {
+      filters.style.display = "flex";
     }
   }
 
@@ -36,7 +46,6 @@ var globalWorks = [];
 const gallery = document.getElementById("gallery");
 const filters = document.getElementById("filters");
 
-//fetch Works into .json
 async function getWorks() {
   const response = await fetch("http://localhost:5678/api/works");
   const worksData = await response.json();
@@ -44,21 +53,19 @@ async function getWorks() {
   displayWorks(worksData);
 }
 
-//fetch categories into .json
 async function getCategories() {
   const response = await fetch("http://localhost:5678/api/categories");
-  categories = await response.json();
+  const categories = await response.json();
 
-  //ajout bouton "tous"
+  //add button "tous"
   displayFilterButton(null, "Tous", true);
 
-  //ajout boutons categories
+  //add other filter button
   categories.forEach(function (category) {
     displayFilterButton(category.id, category.name);
   });
 }
 
-//add class to use css
 function displayFilterButton(id, name, active = false) {
   const button = document.createElement("button");
   button.innerText = name;
@@ -81,21 +88,21 @@ function filterWorks(categoryId = null) {
     if (categoryId === null) {
       return true;
     }
-    return workData.categoryId === categoryId;
+    return workData.categoryId == categoryId;
   });
   displayWorks(filteredWorks);
 }
 
-//method 2
 function displayWorks(worksData) {
   gallery.innerHTML = "";
   worksData.forEach((workData) => {
-    gallery.innerHTML += `
-              <figure>
-                  <img src="${workData.imageUrl}" alt="${workData.title}" />
-                  <figcaption>${workData.title}</figcaption>
-              </figure>
-              `;
+    const figure = document.createElement("figure");
+    figure.setAttribute("data-category-id", workData.categoryId);
+    figure.innerHTML = `
+      <img src="${workData.imageUrl}" alt="${workData.title}" />
+      <figcaption>${workData.title}</figcaption>
+    `;
+    gallery.appendChild(figure);
   });
 }
 
@@ -128,6 +135,25 @@ const closeModal = function (e) {
 const showAddPhotoView = function () {
   document.getElementById("modal-view-base").style.display = "none";
   document.getElementById("modal-view-add-photo").style.display = "flex";
+
+  fetch("http://localhost:5678/api/categories")
+    .then((response) => response.json())
+    .then((categories) => {
+      const select = document.getElementById("photo-category");
+      select.innerHTML = "";
+
+      categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        select.appendChild(option);
+      });
+
+      checkFormValidity(); // Vérification après chargement des catégories
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la récupération des catégories:", error);
+    });
 };
 
 const showBaseView = function () {
@@ -178,11 +204,8 @@ function displayModalWorks(works) {
 }
 
 function removeWorkCard(card, workId) {
-  // Remove card from the DOM
-  card.remove();
-
   const token = localStorage.getItem("token");
-  // request to remove work :
+
   fetch(`http://localhost:5678/api/works/${workId}`, {
     method: "DELETE",
     headers: {
@@ -190,21 +213,38 @@ function removeWorkCard(card, workId) {
     },
   })
     .then((response) => {
-      console.log("test");
+      if (response.ok) {
+        // Mettre à jour globalWorks
+        globalWorks = globalWorks.filter((work) => work.id !== workId);
+        // Mettre à jour l'affichage galerie
+        displayWorks(globalWorks);
+        // Mettre à jour l'affichage de la modale
+        modalGetWorks();
+        console.log("Work deleted successfully");
+      } else {
+        console.error("Erreur lors de la suppression");
+      }
     })
-    .error((error) => {
-      console.log("Erreur lors de la suppression");
+    .catch((error) => {
+      console.error("Erreur lors de la suppression", error);
     });
-
-  // Remove work from modalGlobalWorks
-  modalGlobalWorks = modalGlobalWorks.filter((work) => work.id !== workId);
-  globalWorks = globalWorks.filter((work) => work.id !== workId);
-  displayWorks(globalWorks);
 }
 
-document.querySelectorAll(".js-modal").forEach((a) => {
-  a.addEventListener("click", openModal);
-});
+function checkFormValidity() {
+  const title = document.getElementById("photo-title").value;
+  const fileInput = document.getElementById("photo-upload").files.length;
+  const submitButton = document.querySelector("#formAddPicture .modal-button");
+
+  if (title && fileInput > 0) {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
+  }
+}
+
+document
+  .getElementById("photo-title")
+  .addEventListener("input", checkFormValidity); // pour vérifier le titre
 
 document
   .getElementById("photo-upload")
@@ -232,6 +272,84 @@ document
         reader.readAsDataURL(file);
       }
     }
+    checkFormValidity(); // Vérifier l'état du formulaire après sélection du fichier
   });
 
+document
+  .getElementById("formAddPicture")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const title = document.getElementById("photo-title").value;
+    const category = document.getElementById("photo-category").value;
+    const fileInput = document.getElementById("photo-upload").files[0];
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("image", fileInput);
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Token non trouvé. Veuillez vous connecter.");
+      return;
+    }
+
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then((data) => {
+            throw new Error(
+              data.message || "Erreur lors de l'ajout de la photo"
+            );
+          });
+        }
+      })
+      .then((data) => {
+        console.log("Photo ajoutée:", data);
+        // Pour voir la data du work post
+        closeModal(event);
+        addPhotoToGallery(data);
+        addPhotoToModal(data);
+      })
+      .catch((error) => {
+        console.error("Erreur:", error);
+        alert("Erreur: " + error.message);
+      });
+  });
+
+function addPhotoToGallery(photo) {
+  console.log("Check WORK POST:", photo);
+  globalWorks.push(photo);
+  displayWorks(globalWorks);
+}
+
+function addPhotoToModal(photo) {
+  const container = document.getElementById("work-cards-container");
+  const newCard = document.createElement("div");
+  newCard.className = "work-card";
+  newCard.innerHTML = `
+    <img src="${photo.imageUrl}" alt="${photo.id}" />
+    <img class="remove-icon" src="./assets/icons/bin.png" alt="Remove" />
+  `;
+  newCard
+    .querySelector(".remove-icon")
+    .addEventListener("click", () => removeWorkCard(newCard, photo.id));
+  container.appendChild(newCard);
+}
+
 modalGetWorks();
+
+//TODO: voir les console.error en trop
+//Style sur "Mes projets"
+//recheck toutes les étapes
+//organiser le code en séparant les fonctions

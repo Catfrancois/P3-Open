@@ -67,7 +67,7 @@
           style="display: none"
         >
           <div class="modal-wrapper">
-            <!-- Vue de base -->
+            <!-- Modale vue de base -->
             <div id="modal-view-base" class="modal-content">
               <div class="modal-header">
                 <button class="closeCross">
@@ -122,22 +122,18 @@
                 <div class="category-container">
                   <label for="photo-category">Catégorie</label>
                   <div class="select-container">
-                    <select id="photo-category" required>
-                      <!-- Catégories dynamiques -->
-                    </select>
+                    <select id="photo-category" required></select>
                   </div>
                 </div>
                 <hr class="style-hr" />
-                <button class="button-add-picture" type="submit">
+                <button class="modal-button" type="submit" disabled>
                   Valider
                 </button>
               </form>
             </div>
           </div>
         </aside>
-
         <div id="filters"></div>
-        <!-- changed class to id only one occurence -->
         <div id="gallery"></div>
       </section>
       <section id="contact">
