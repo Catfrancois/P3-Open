@@ -3,13 +3,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const logInLink = document.getElementById("logInLink");
   const logOutLink = document.getElementById("logOutLink");
   const loginModifierButton = document.getElementById("loginModifierButton");
+  const modeEditionContainer = document.getElementById(
+    "mode-edition-container"
+  );
   const filters = document.getElementById("filters");
 
   if (token != null) {
     logInLink.style.display = "none";
     logOutLink.style.display = "block";
-    if (loginModifierButton) {
+    if (loginModifierButton && modeEditionContainer) {
       loginModifierButton.style.display = "block";
+      modeEditionContainer.style.display = "flex";
     }
     if (filters) {
       filters.style.display = "none";
@@ -20,8 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("token");
       logInLink.style.display = "block";
       logOutLink.style.display = "none";
-      if (loginModifierButton) {
+      if (loginModifierButton && modeEditionContainer) {
         loginModifierButton.style.display = "none";
+        modeEditionContainer.style.display = "none";
       }
       if (filters) {
         filters.style.display = "flex";
@@ -30,8 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     logInLink.style.display = "block";
     logOutLink.style.display = "none";
-    if (loginModifierButton) {
+    if (loginModifierButton && modeEditionContainer) {
       loginModifierButton.style.display = "none";
+      modeEditionContainer.style.display = "none";
     }
     if (filters) {
       filters.style.display = "flex";
@@ -150,9 +156,6 @@ const showAddPhotoView = function () {
       });
 
       checkFormValidity(); // Vérification après chargement des catégories
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la récupération des catégories:", error);
     });
 };
 
@@ -214,9 +217,9 @@ function removeWorkCard(card, workId) {
   })
     .then((response) => {
       if (response.ok) {
-        // Mettre à jour globalWorks
+        // Mettre à jour globalWorks pour retirer le travail supprimé
         globalWorks = globalWorks.filter((work) => work.id !== workId);
-        // Mettre à jour l'affichage galerie
+        // Mettre à jour l'affichage de la galerie
         displayWorks(globalWorks);
         // Mettre à jour l'affichage de la modale
         modalGetWorks();
@@ -349,7 +352,16 @@ function addPhotoToModal(photo) {
 
 modalGetWorks();
 
-//TODO: voir les console.error en trop
-//Style sur "Mes projets"
 //recheck toutes les étapes
 //organiser le code en séparant les fonctions
+
+// P1 TODO: fix when add a work > delete > try to add again: photo is still in preview
+// P2 TODO: fix style of header in login page
+// P3 TODO: rename all camel case to kebab case && check function/variable names: ex: photo into work ??
+// P4 TODO: organise code && review all the steps
+
+// last commit:
+// 1 modal disabled button removed border
+// 2 hover on modal button && upload photo label && login
+// 3 added black top banner + show/hide when logged
+// 4 multiple small style fix

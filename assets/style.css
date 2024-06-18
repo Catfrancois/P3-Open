@@ -136,11 +136,16 @@ body {
 }
 header {
   display: flex;
+  margin: 0px 0px 50px 0px;
   justify-content: space-between;
-  margin: 50px 0;
 }
+
+main {
+  padding: 0px 100px 0px 100px;
+}
+
 section {
-  margin: 50px 0;
+  margin-bottom: 100px;
 }
 
 h1 {
@@ -284,7 +289,6 @@ footer nav ul {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-left: 80px;
 }
 
 .projets-title {
@@ -390,6 +394,7 @@ main .logInForm input[type="submit"] {
   height: 36px;
   font-family: "Syne";
   font-weight: 700;
+  cursor: pointer;
 }
 
 footer .logInFooterContainer .logInNav {
@@ -467,10 +472,18 @@ footer .logInFooterContainer {
   padding: 0.5em 1em;
   border: 1px #1d6154 solid;
 }
+.modal-button:hover {
+  cursor: pointer;
+}
 
 .modal-button:disabled {
   background-color: #a7a7a7;
   border-color: a7a7a7;
+  border: none;
+}
+
+.modal-button:disabled:hover {
+  cursor: default;
 }
 
 .modal-content {
@@ -534,6 +547,10 @@ footer .logInFooterContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.add-photo-container .photo-upload:hover {
+  cursor: pointer;
 }
 
 .add-photo-container p {
@@ -641,4 +658,38 @@ footer .logInFooterContainer {
   cursor: pointer;
   width: 17px;
   height: 17px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.mode-edition-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0;
+  background-color: #000000;
+  gap: 8px;
+  padding: 18px;
+}
+
+.modif-header-text {
+  color: white;
+  font-family: "Work Sans";
+  font-weight: 400;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 80px 16px 80px;
+}
+
+.menu-list {
+  gap: 18px;
 }

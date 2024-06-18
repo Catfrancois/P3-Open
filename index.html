@@ -17,16 +17,26 @@
   </head>
   <body>
     <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li id="logInLink"><a href="/login.html">login</a></li>
-          <li id="logOutLink"><a href="#">logout</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
+      <div class="header-container">
+        <div id="mode-edition-container" class="mode-edition-container">
+          <img src="./assets/icons/modif_white.png" alt="modif-icon" />
+          <p class="modif-header-text">Mode édition</p>
+        </div>
+        <div class="menu-container">
+          <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+          <nav>
+            <ul class="menu-list">
+              <li>projets</li>
+              <li>contact</li>
+              <li id="logInLink"><a href="/login.html">login</a></li>
+              <li id="logOutLink"><a href="#">logout</a></li>
+              <li>
+                <img src="./assets/icons/instagram.png" alt="Instagram" />
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
     <main>
       <section id="introduction">
@@ -56,7 +66,7 @@
         <div class="modif-title-container">
           <h2 class="projets-title">Mes Projets</h2>
           <button id="loginModifierButton" class="login-modifier">
-            <img src="./assets/icons/modif.png" alt="modif-icon" />
+            <img src="./assets/icons/modif_black.png" alt="modif-icon" />
             <a href="#modal" class="js-modal button-link">modifier</a>
           </button>
         </div>

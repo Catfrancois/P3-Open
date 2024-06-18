@@ -50,6 +50,15 @@ form.addEventListener("submit", (event) => {
 
 email: sophie.bluel@test.tld
 
-password: S0phie
+password: S0phieork
 
 */
+
+//JWT json web expliqué le token
+/* fetch("http://localhost:5678/api/works", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+  body: formData,
+}) */
