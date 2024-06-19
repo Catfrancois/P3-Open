@@ -14,7 +14,7 @@
     <script src="./js/login.js" defer></script>
   </head>
   <body>
-    <header>
+    <header class="login-header">
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
@@ -26,9 +26,9 @@
       </nav>
     </header>
     <main>
-        <div class="logInContainer">
+        <div class="login-main-container">
             <h2>Log In</h2>
-            <form id="formLogIn" class="logInForm">
+            <form id="login-form" class="login-form">
                 <div>
                     <label for="email">E-mail</label>
                     <input type="text" autocomplete="email" id="email" required>
@@ -38,13 +38,13 @@
                     <input type="password" autocomplete="password" id="password" required>
                 </div>
                 <input class="submit" type="submit" value="Se connecter"></input>
-                <a href="#" class="underlinePassWord">Mot de passe oublié</a>
+                <a href="#" class="underline-password">Mot de passe oublié</a>
             </form>
         </div>
     </main>
     <footer>
-        <div class="logInFooterContainer">      
-            <nav class="logInNav" >Mentions légales</nav>
+        <div class="login-footer-container">      
+            <nav class="login-nav" >Mentions légales</nav>
         </div>
     </footer>
   </body>

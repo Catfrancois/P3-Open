@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
-  const logInLink = document.getElementById("logInLink");
-  const logOutLink = document.getElementById("logOutLink");
-  const loginModifierButton = document.getElementById("loginModifierButton");
+  const logInLink = document.getElementById("login-link");
+  const logOutLink = document.getElementById("logout-link");
+  const loginModifierButton = document.getElementById("login-edit-button");
   const modeEditionContainer = document.getElementById(
     "mode-edition-container"
   );
@@ -121,7 +121,7 @@ const openModal = function (e) {
   target.removeAttribute("aria-hidden");
   target.setAttribute("aria-modal", "true");
   modal = target;
-  modal.querySelectorAll(".closeCross").forEach((button) => {
+  modal.querySelectorAll(".close-cross").forEach((button) => {
     button.addEventListener("click", closeModal);
   });
 };
@@ -131,7 +131,7 @@ const closeModal = function (e) {
   modal.style.display = "none";
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
-  modal.querySelectorAll(".closeCross").forEach((button) => {
+  modal.querySelectorAll(".close-cross").forEach((button) => {
     button.removeEventListener("click", closeModal);
   });
   showBaseView();
@@ -155,7 +155,7 @@ const showAddPhotoView = function () {
         select.appendChild(option);
       });
 
-      checkFormValidity(); // Vérification après chargement des catégories
+      checkFormValidity();
     });
 };
 
@@ -171,7 +171,7 @@ document.querySelectorAll(".js-modal").forEach((a) => {
 document
   .getElementById("add-photo-button")
   .addEventListener("click", showAddPhotoView);
-document.querySelector(".returnArrow").addEventListener("click", showBaseView);
+document.querySelector(".return-arrow").addEventListener("click", showBaseView);
 
 var modalGlobalWorks = [];
 
@@ -217,11 +217,8 @@ function removeWorkCard(card, workId) {
   })
     .then((response) => {
       if (response.ok) {
-        // Mettre à jour globalWorks pour retirer le travail supprimé
         globalWorks = globalWorks.filter((work) => work.id !== workId);
-        // Mettre à jour l'affichage de la galerie
         displayWorks(globalWorks);
-        // Mettre à jour l'affichage de la modale
         modalGetWorks();
         console.log("Work deleted successfully");
       } else {
@@ -236,7 +233,9 @@ function removeWorkCard(card, workId) {
 function checkFormValidity() {
   const title = document.getElementById("photo-title").value;
   const fileInput = document.getElementById("photo-upload").files.length;
-  const submitButton = document.querySelector("#formAddPicture .modal-button");
+  const submitButton = document.querySelector(
+    "#form-add-picture .modal-button"
+  );
 
   if (title && fileInput > 0) {
     submitButton.disabled = false;
@@ -247,7 +246,7 @@ function checkFormValidity() {
 
 document
   .getElementById("photo-title")
-  .addEventListener("input", checkFormValidity); // pour vérifier le titre
+  .addEventListener("input", checkFormValidity);
 
 document
   .getElementById("photo-upload")
@@ -275,11 +274,11 @@ document
         reader.readAsDataURL(file);
       }
     }
-    checkFormValidity(); // Vérifier l'état du formulaire après sélection du fichier
+    checkFormValidity();
   });
 
 document
-  .getElementById("formAddPicture")
+  .getElementById("form-add-picture")
   .addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -319,10 +318,10 @@ document
       })
       .then((data) => {
         console.log("Photo ajoutée:", data);
-        // Pour voir la data du work post
         closeModal(event);
         addPhotoToGallery(data);
         addPhotoToModal(data);
+        resetForm();
       })
       .catch((error) => {
         console.error("Erreur:", error);
@@ -331,7 +330,6 @@ document
   });
 
 function addPhotoToGallery(photo) {
-  console.log("Check WORK POST:", photo);
   globalWorks.push(photo);
   displayWorks(globalWorks);
 }
@@ -350,18 +348,17 @@ function addPhotoToModal(photo) {
   container.appendChild(newCard);
 }
 
+function resetForm() {
+  const form = document.getElementById("form-add-picture");
+  form.reset();
+  const preview = document.getElementById("picture-preview");
+  preview.src = "./assets/icons/picture_icon.png";
+  preview.classList.remove("preview");
+
+  document.querySelector(".photo-upload").classList.remove("hidden");
+  document.querySelector(".photo-info").classList.remove("hidden");
+
+  document.querySelector("#form-add-picture .modal-button").disabled = true;
+}
+
 modalGetWorks();
-
-//recheck toutes les étapes
-//organiser le code en séparant les fonctions
-
-// P1 TODO: fix when add a work > delete > try to add again: photo is still in preview
-// P2 TODO: fix style of header in login page
-// P3 TODO: rename all camel case to kebab case && check function/variable names: ex: photo into work ??
-// P4 TODO: organise code && review all the steps
-
-// last commit:
-// 1 modal disabled button removed border
-// 2 hover on modal button && upload photo label && login
-// 3 added black top banner + show/hide when logged
-// 4 multiple small style fix

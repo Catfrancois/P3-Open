@@ -295,7 +295,7 @@ footer nav ul {
   margin: none;
 }
 
-.login-modifier {
+.login-edit-button {
   margin-bottom: 2em;
   border: none;
   background-color: #ffffff;
@@ -344,7 +344,7 @@ footer nav ul {
 }
 
 /* LOG IN */
-main .logInContainer {
+main .login-main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -353,35 +353,35 @@ main .logInContainer {
   margin-bottom: 250px;
 }
 
-main .logInContainer .underlinePassWord {
+main .login-main-container .underline-password {
   text-decoration: underline;
   font-family: "Work Sans";
   font-size: 14px;
   font-weight: 500;
 }
 
-main .logInForm {
+main .login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
 
-main .logInForm div {
+main .login-form div {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-main .logInForm label {
+main .login-form label {
   font-family: "Work Sans";
   font-size: 14px;
   font-weight: 500;
   text-align: left;
 }
 
-main .logInForm input[type="text"],
-main .logInForm input[type="password"] {
+main .login-form input[type="text"],
+main .login-form input[type="password"] {
   box-shadow: 0px 4px 14px 0px #00000017;
   background-color: #ffffff;
   width: 380px;
@@ -389,7 +389,7 @@ main .logInForm input[type="password"] {
   border: none;
 }
 
-main .logInForm input[type="submit"] {
+main .login-form input[type="submit"] {
   border: none;
   height: 36px;
   font-family: "Syne";
@@ -397,17 +397,17 @@ main .logInForm input[type="submit"] {
   cursor: pointer;
 }
 
-footer .logInFooterContainer .logInNav {
+footer .login-footer-container .login-nav {
   font-family: "Work Sans";
   font-weight: 300;
 }
 
-footer .logInFooterContainer {
+footer .login-footer-container {
   display: flex;
   justify-content: end;
 }
 
-#logOutLink {
+#logout-link {
   display: none;
 }
 
@@ -442,7 +442,7 @@ footer .logInFooterContainer {
   display: flex;
 }
 
-.modal-header .closeCross {
+.modal-header .close-cross {
   margin-left: auto;
 }
 
@@ -494,12 +494,12 @@ footer .logInFooterContainer {
   gap: 30px;
 }
 
-.returnArrow {
+.return-arrow {
   border: none;
   background-color: #ffffff;
 }
 
-.returnArrow:hover {
+.return-arrow:hover {
   cursor: pointer;
 }
 
@@ -621,12 +621,12 @@ footer .logInFooterContainer {
   margin: 10px 0;
 }
 
-.closeCross {
+.close-cross {
   border: none;
   background-color: #ffffff;
 }
 
-.closeCross:hover {
+.close-cross:hover {
   cursor: pointer;
 }
 
@@ -688,6 +688,13 @@ footer .logInFooterContainer {
   flex-direction: row;
   justify-content: space-between;
   padding: 16px 80px 16px 80px;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 48px 80px 16px 80px;
 }
 
 .menu-list {
