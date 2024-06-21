@@ -6,14 +6,10 @@ form.addEventListener("submit", (event) => {
   let email = document.getElementById("email")?.value;
   let password = document.getElementById("password")?.value;
 
-  console.log("email : ", email, "password : ", password);
-
   let request = {
     email: email,
     password: password,
   };
-
-  console.log("request", request);
 
   fetch("http://localhost:5678/api/users/login", {
     method: "POST",
@@ -26,39 +22,19 @@ form.addEventListener("submit", (event) => {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Erreur de connection");
+        return response.json().then((data) => {
+          throw new Error(data.message || "Erreur de connexion");
+        });
       }
     })
     .then((data) => {
       let token = data.token;
-      /*
-      // pour utiliser les cookies à la place du localStorage ?? //
-      document.cookie = `token=${token};path=/`;
-       */
       localStorage.setItem("token", token);
       window.location.href = "index.html";
-      /* 
-      // Ajouter gestion de la page utilisateur connecté ?? //
-      */
     })
-    .catch((error) => {
-      alert("Erreur: " + error.message);
+    .catch(() => {
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent =
+        "Le nom d'utilisateur ou le mot de passe est incorrect";
     });
 });
-
-/*
-
-email: sophie.bluel@test.tld
-
-password: S0phieork
-
-*/
-
-//JWT json web expliqué le token
-/* fetch("http://localhost:5678/api/works", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-  body: formData,
-}) */

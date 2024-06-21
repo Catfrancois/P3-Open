@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   getWorks();
 });
 
-var globalWorks = [];
+let globalWorks = [];
 const gallery = document.getElementById("gallery");
 const filters = document.getElementById("filters");
 
@@ -124,6 +124,13 @@ const openModal = function (e) {
   modal.querySelectorAll(".close-cross").forEach((button) => {
     button.addEventListener("click", closeModal);
   });
+  modal.addEventListener("click", closeModalOnBackgroundClick);
+};
+
+const closeModalOnBackgroundClick = function (e) {
+  if (e.target === modal) {
+    closeModal(e);
+  }
 };
 
 const closeModal = function (e) {
@@ -134,6 +141,7 @@ const closeModal = function (e) {
   modal.querySelectorAll(".close-cross").forEach((button) => {
     button.removeEventListener("click", closeModal);
   });
+  modal.removeEventListener("click", closeModalOnBackgroundClick);
   showBaseView();
   modal = null;
 };
@@ -173,7 +181,7 @@ document
   .addEventListener("click", showAddPhotoView);
 document.querySelector(".return-arrow").addEventListener("click", showBaseView);
 
-var modalGlobalWorks = [];
+let modalGlobalWorks = [];
 
 async function modalGetWorks() {
   const response = await fetch("http://localhost:5678/api/works");
@@ -220,7 +228,6 @@ function removeWorkCard(card, workId) {
         globalWorks = globalWorks.filter((work) => work.id !== workId);
         displayWorks(globalWorks);
         modalGetWorks();
-        console.log("Work deleted successfully");
       } else {
         console.error("Erreur lors de la suppression");
       }
@@ -252,15 +259,18 @@ document
   .getElementById("photo-upload")
   .addEventListener("change", function (event) {
     const file = event.target.files[0];
+    const errorMessage = document.getElementById("photo-error-message");
+    errorMessage.textContent = "";
     if (file) {
       const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
       const allowedTypes = ["image/jpeg", "image/png"];
 
       if (!allowedTypes.includes(file.type)) {
-        alert("Veuillez sélectionner un fichier jpg ou png.");
+        errorMessage.textContent =
+          "Veuillez sélectionner un fichier jpg ou png.";
         event.target.value = "";
       } else if (file.size > maxSize) {
-        alert("Le fichier doit être inférieur à 4 Mo.");
+        errorMessage.textContent = "Le fichier doit être inférieur à 4 Mo.";
         event.target.value = "";
       } else {
         const reader = new FileReader();
@@ -294,8 +304,7 @@ document
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("Token non trouvé. Veuillez vous connecter.");
-      return;
+      throw new Error("Token non trouvé. Veuillez vous connecter.");
     }
 
     fetch("http://localhost:5678/api/works", {
@@ -317,7 +326,6 @@ document
         }
       })
       .then((data) => {
-        console.log("Photo ajoutée:", data);
         closeModal(event);
         addPhotoToGallery(data);
         addPhotoToModal(data);
@@ -325,7 +333,6 @@ document
       })
       .catch((error) => {
         console.error("Erreur:", error);
-        alert("Erreur: " + error.message);
       });
   });
 
